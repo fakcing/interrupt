@@ -1,53 +1,96 @@
 /**
  * Done by:
- * Student Name: Severyn Kotyhoroshko
- * Student Group: 123
- * Lab 1.5
- */
+ * Student Name: Malinovskyi Vlad
+ * Student Group: 121
+ * Prac 1.5
+ **/
 
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <vector>
+#include <limits>
 
-using namespace std;
+int findMinValue(const std::vector<int>& A) {
+    int minValue = A[0];
+    for (int i = 1; i < A.size(); i++) {
+        if (A[i] < minValue) {
+            minValue = A[i];
+        }
+    }
+    return minValue;
+}
 
-void initRandomizer() {
-    // Seed the random number generator with the current time
-    srand(time(0));  // srand(time(NULL)) could also be used
+int findIndexOfMaxPositive(const std::vector<int>& A) {
+    int maxIndex = -1;
+    int maxValue = std::numeric_limits<int>::min();
+    for (int i = 0; i < A.size(); i++) {
+        if (A[i] > 0 && A[i] > maxValue) {
+            maxValue = A[i];
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+int findMinGreaterThanP(const std::vector<int>& A, int P) {
+    int minValue = std::numeric_limits<int>::max();
+    for (int i = 0; i < A.size(); i++) {
+        if (A[i] > P && A[i] < minValue) {
+            minValue = A[i];
+        }
+    }
+    return minValue == std::numeric_limits<int>::max() ? -1 : minValue;
+}
+
+int findLastIndexOfP(const std::vector<int>& A, int P) {
+    int lastIndex = -1;
+    for (int i = 0; i < A.size(); i++) {
+        if (A[i] == P) {
+            lastIndex = i;
+        }
+    }
+    return lastIndex;
+}
+
+int countOccurrencesOfP(const std::vector<int>& A, int P) {
+    int count = 0;
+    for (int i = 0; i < A.size(); i++) {
+        if (A[i] == P) {
+            count++;
+        }
+    }
+    return count;
+}
+
+int findFirstIndexOfP(const std::vector<int>& A, int P) {
+    for (int i = 0; i < A.size(); i++) {
+        if (A[i] == P) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int findMinPositiveValue(const std::vector<int>& A) {
+    int minValue = std::numeric_limits<int>::max();
+    for (int i = 0; i < A.size(); i++) {
+        if (A[i] > 0 && A[i] < minValue) {
+            minValue = A[i];
+        }
+    }
+    return minValue == std::numeric_limits<int>::max() ? -1 : minValue;
 }
 
 int main() {
-    // Задано послідовність значень А[n]. Знайти мінімальне значення у послідовності.
-    {
-        initRandomizer();
+    std::vector<int> A = { 3, -1, 4, -5, 6, 2, 9, -7 };
+    int P = 4;
 
-        int n;
-        cout << "Enter the length of the sequence: ";
-        cin >> n;
-
-        std::vector<int> myVector(n);
-        // Populate the array with random values
-        for (int i = 0; i < n; i++) {
-            // arr[i] = rand();
-            int randomVar = (rand() % 100) - 50;
-            myVector[i] = randomVar;
-        }
-
-        // cout the array
-        for (int i = 0; i < n; i++) {
-            cout << myVector[i] << " ";
-        }
-        cout << endl;
-                       // indexes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-        int min = myVector[0]; // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        for (int i = 1; i < n; i++) {
-            if (myVector[i] < min) {
-                min = myVector[i];
-            }
-        }
-
-        cout << "The minimum value in the sequence is: " << min << endl;
-    }
+    std::cout << "Min value in sequence: " << findMinValue(A) << std::endl;
+    std::cout << "Index of max positive value: " << findIndexOfMaxPositive(A) << std::endl;
+    std::cout << "Min value greater than P: " << findMinGreaterThanP(A, P) << std::endl;
+    std::cout << "Last index of P: " << findLastIndexOfP(A, P) << std::endl;
+    std::cout << "Occurrences of P: " << countOccurrencesOfP(A, P) << std::endl;
+    std::cout << "First index of P: " << findFirstIndexOfP(A, P) << std::endl;
+    std::cout << "Min positive value in sequence: " << findMinPositiveValue(A) << std::endl;
 
     return 0;
 }
