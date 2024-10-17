@@ -1,5 +1,7 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
+#include <cctype>
 
 using namespace std;
 
@@ -16,41 +18,47 @@ double calculate(double a, double b, char operation) {
         }
     default:
         cout << "invalid operation!" << endl;
-        return 0;
+        exit(1);
+    }
+}
+
+void parseExpression(const string& expression, vector<double>& numbers, vector<char>& operations) {
+    stringstream ss(expression);
+    double number;
+    char operation;
+
+    ss >> number;
+    numbers.push_back(number);
+
+    while (ss >> operation) {
+        if (operation != '+' && operation != '-' && operation != '*' && operation != '/') {
+            cout << "error: invalid operation!" << endl;
+            exit(1);
+        }
+        operations.push_back(operation);
+
+        ss >> number;
+        numbers.push_back(number);
     }
 }
 
 int main() {
-    int num_operations;
+    string expression;
 
-    cout << "enter the number of operations: ";
-    cin >> num_operations;
+    cout << "enter the expression: ";
+    cin >> expression;
 
-    vector<char> operations(num_operations);
-    vector<double> numbers(num_operations + 1);
+    vector<double> numbers;
+    vector<char> operations;
 
-    cout << "enter the operations (+, -, *, /):\n";
-    for (int i = 0; i < num_operations; ++i) {
-        cout << "operation " << i + 1 << ": ";
-        cin >> operations[i];
-        if (operations[i] != '+' && operations[i] != '-' && operations[i] != '*' && operations[i] != '/') {
-            cout << "error: invalid operation!" << endl;
-            return 1;
-        }
-    }
-
-    cout << "enter the numbers:\n";
-    for (int i = 0; i <= num_operations; ++i) {
-        cout << "number " << i + 1 << ": ";
-        cin >> numbers[i];
-    }
+    parseExpression(expression, numbers, operations);
 
     vector<double> new_numbers;
     vector<char> new_operations;
 
     new_numbers.push_back(numbers[0]);
 
-    for (int i = 0; i < num_operations; ++i) {
+    for (int i = 0; i < operations.size(); ++i) {
         if (operations[i] == '*' || operations[i] == '/') {
             double result = calculate(new_numbers.back(), numbers[i + 1], operations[i]);
             new_numbers.back() = result;
