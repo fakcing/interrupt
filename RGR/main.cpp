@@ -6,14 +6,14 @@ int main() {
     std::string input;
     std::string errorMessage;
 
-    std::cout << "Ââåä³òü ğÿäîê: ";
+    std::cout << "Ã‚Ã¢Ã¥Ã¤Â³Ã²Ã¼ Ã°Ã¿Ã¤Ã®Ãª: ";
     std::cin >> input;
 
     if (validateString(input, errorMessage)) {
-        std::cout << "\u2713 " << input << " \u2208 L(V)\n";
+        std::cout << " " << input << " \n";
     }
     else {
-        std::cout << "\u2717 " << input << " \u2209 L(V): " << errorMessage << "\n";
+        std::cout << " " << input << "  " << errorMessage << "\n";
     }
 
     return 0;
